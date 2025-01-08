@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Proficiency Predictor</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.10.6/brython.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body onload="brython()">
+    <div class="container">
+        <h1>Language Proficiency Predictor</h1>
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="number" id="age" required>
+        </div>
+        <div class="form-group">
+            <label for="learning_method">Learning Method:</label>
+            <select id="learning_method" required>
+                <option value="0">Online Courses</option>
+                <option value="1">Language Exchange</option>
+                <option value="2">Textbooks</option>
+                <option value="3">Immersion</option>
+                <option value="4">Private Tutor</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="language">Language:</label>
+            <select id="language" required>
+                <option value="0">English</option>
+                <option value="1">Spanish</option>
+                <option value="2">German</option>
+                <option value="3">French</option>
+                <option value="4">Chinese</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="learning_time">Learning Time Per Week:</label>
+            <input type="number" id="learning_time" required>
+        </div>
+        <div class="form-group">
+            <label for="duration">Learning Duration (months):</label>
+            <input type="number" id="duration" required>
+        </div>
+        <div class="form-group">
+            <label for="resources_used">Resources Used:</label>
+            <select id="resources_used" required>
+                <option value="0">Online</option>
+                <option value="1">Books</option>
+                <option value="2">Apps</option>
+                <option value="3">Online & Books</option>
+                <option value="4">Online & Apps</option>
+            </select>
+        </div>
+        <button onclick="predict()">Predict Proficiency</button>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script type="text/python">
+        from browser import document, alert
+
+        proficiency_map = {
+            1: "Beginner",
+            2: "Intermediate",
+            3: "Advanced",
+            4: "Proficient",
+            5: "Fluent"
+        }
+
+        def predict():
+            try:
+                age = int(document["age"].value)
+                learning_method = int(document["learning_method"].value)
+                language = int(document["language"].value)
+                learning_time = int(document["learning_time"].value)
+                duration = int(document["duration"].value)
+                resources_used = int(document["resources_used"].value)
+
+                # Simple mock prediction logic (replace with actual model logic)
+                score = (learning_time * duration + age) % 5 + 1
+                prediction = proficiency_map.get(score, "Unknown proficiency level")
+                document["result"].textContent = f"Predicted Proficiency: {prediction}"
+            except Exception as e:
+                alert(f"Error: {e}")
+    </script>
+</body>
+</html>
